@@ -1,8 +1,11 @@
 ---
-title: Hello World
+title: HEO next 主题使用
 description: 这是显示在首页的概述，正文内容均会被隐藏。
 ---
+
+
 Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues).
+
 
 ## Quick Start
 
@@ -37,3 +40,13 @@ $ hexo deploy
 ```
 
 More info: [Deployment](https://hexo.io/docs/one-command-deployment.html)
+
+
+## Next 主题参考
+
+
+https://www.jianshu.com/p/7b5702d3f072
+
+https://michael728.github.io/
+
+https://blog.csdn.net/nightmare_dimple/article/details/86661502

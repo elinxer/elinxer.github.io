@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言Redis编译搭建，采用最新版本编译安装，系统版本centos7.2+ 运行环境：  centos7.2 (本次是单机搭建，生产环境需要多台物理机)  Redis 5.0.8">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis5使用 -- 编译安装">
+<meta property="og:url" content="http://example.com/2019/10/14/redis-install/index.html">
+<meta property="og:site_name" content="Elinx">
+<meta property="og:description" content="前言Redis编译搭建，采用最新版本编译安装，系统版本centos7.2+ 运行环境：  centos7.2 (本次是单机搭建，生产环境需要多台物理机)  Redis 5.0.8">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-10-14T15:10:57.000Z">
+<meta property="article:modified_time" content="2021-04-10T03:35:30.108Z">
+<meta property="article:author" content="Elinx">
+<meta property="article:tag" content="redis">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2019/10/14/redis-install/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Redis5使用 -- 编译安装 | Elinx</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Elinx</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">生活，也是一种享受！</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/14/redis-install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo.svg">
+      <meta itemprop="name" content="Elinx">
+      <meta itemprop="description" content="Backend，公众号『Dtea正经人』">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Elinx">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Redis5使用 -- 编译安装
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-10-14 23:10:57" itemprop="dateCreated datePublished" datetime="2019-10-14T23:10:57+08:00">2019-10-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-10 11:35:30" itemprop="dateModified" datetime="2021-04-10T11:35:30+08:00">2021-04-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index"><span itemprop="name">Redis</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Redis编译搭建，采用最新版本编译安装，系统版本centos7.2+</p>
+<p>运行环境：</p>
+<ul>
+<li><p>centos7.2 (本次是单机搭建，生产环境需要多台物理机)</p>
+</li>
+<li><p>Redis 5.0.8</p>
+</li>
+</ul>
+<span id="more"></span>
+
+
+
+<h2 id="环境安装"><a href="#环境安装" class="headerlink" title="环境安装"></a>环境安装</h2><h3 id="centos7安装"><a href="#centos7安装" class="headerlink" title="centos7安装"></a>centos7安装</h3><p>自行安装centos 7 系统 这里就不在说明了。</p>
+<h3 id="安装Redis"><a href="#安装Redis" class="headerlink" title="安装Redis"></a>安装Redis</h3><ol>
+<li> 下载 Redis ，现在的最新版本为 5.0.8。当前是在<code>/usr</code>下</li>
+</ol>
+<ul>
+<li>选好安装目录和确定root或安装用户（组） <code>cd ~</code></li>
+<li>下载： <code>wget http://download.redis.io/releases/redis-5.0.8.tar.gz</code></li>
+</ul>
+<ol start="2">
+<li><p>解压安装包</p>
+<ul>
+<li>解压：<code>tar -xvf redis-5.0.8.tar.gz</code></li>
+</ul>
+</li>
+<li><p>建立软连接</p>
+<ul>
+<li><p>原因：方便管理和升级</p>
+</li>
+<li><p>建立软连接：<code>ln -s redis-5.0.8 redis</code></p>
+</li>
+</ul>
+</li>
+</ol>
+<ol start="4">
+<li><p>编译</p>
+<ul>
+<li><p>进入 redis ，执行编译。命令：<code>cd redis</code>, 然后直接输入： <code>make</code>。</p>
+</li>
+<li><p><font color='red'>注意：这里可能会出现错误，如果无法编译请查看本文最后的 “可能出现的问题” 并寻找解决方法</font>。</p>
+</li>
+</ul>
+</li>
+<li><p>安装</p>
+<ul>
+<li>安装：<code>make install</code></li>
+</ul>
+</li>
+<li><p>启动</p>
+<ol>
+<li><p> 启动方式1：<code>redis-server</code> , 默认端口为 6379</p>
+</li>
+<li><p> 启动方式2：<code>redis-server --port 6380</code>,指定端口启动</p>
+</li>
+<li><p>启动方式3：通过配置文件启动，也是我们推荐的启动方式，方便管理 </p>
+<ul>
+<li><p>命令 <code>redis-server redis-xxxx.conf</code></p>
+</li>
+<li><p>在安装的redis目录中新建 data 文件。<code>mkdir data</code> 方便我们存储数据</p>
+</li>
+<li><p>在安装的redis目录中新建 config 文件。<code>mkdir config</code></p>
+</li>
+<li><p>复制 redis 目录中 redis.conf 文件到 config/ 目录中。<code>cp redis.conf ./config</code></p>
+</li>
+<li><p>进入 config 目录。<code>cd config</code></p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<hr>
+<p>redis编译安装完成</p>
+<h2 id="redis-常用配置-命令"><a href="#redis-常用配置-命令" class="headerlink" title="redis 常用配置+命令"></a>redis 常用配置+命令</h2><p>修改可以远程访问： <code>bind 0.0.0.0</code></p>
+<p>修改密码： <code>requirepass 123456</code></p>
+<p>守护进程启动： <code>daemonize yes</code></p>
+<p><strong>启动Redis</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 命令+指定配置</span><br><span class="line">&#x2F;root&#x2F;redis-5.0.8&#x2F;src&#x2F;redis-server &#x2F;root&#x2F;redis-5.0.8&#x2F;config&#x2F;redis-cluster-7000.conf</span><br></pre></td></tr></table></figure>
+
+<p><strong>进入Redis命令行</strong></p>
+<p>登录Redis并使用密码<code>-a</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli -h xxxx.xx.xx.xx -p 6739 -a</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/redis/" rel="tag"># redis</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/04/10/hexo-next-used/" rel="next" title="Hexo next 主题使用">
+      Hexo next 主题使用 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">环境安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#centos7%E5%AE%89%E8%A3%85"><span class="nav-number">2.1.</span> <span class="nav-text">centos7安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Redis"><span class="nav-number">2.2.</span> <span class="nav-text">安装Redis</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE-%E5%91%BD%E4%BB%A4"><span class="nav-number">3.</span> <span class="nav-text">redis 常用配置+命令</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Elinx"
+      src="/images/logo.svg">
+  <p class="site-author-name" itemprop="name">Elinx</p>
+  <div class="site-description" itemprop="description">Backend，公众号『Dtea正经人』</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/elinxer" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;elinxer" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Elinx</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

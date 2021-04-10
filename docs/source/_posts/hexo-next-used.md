@@ -50,3 +50,23 @@ https://www.jianshu.com/p/7b5702d3f072
 https://michael728.github.io/
 
 https://blog.csdn.net/nightmare_dimple/article/details/86661502
+
+
+## 新环境启动
+
+
+安装主题：git clone https://github.com/theme-next/hexo-theme-next themes/next
+
+
+安装hexo
+
+
+npm install hexo-cli -g
+
+npm install hexo-deployer-git --save
+hexo generate
+hexo deploy
+
+
+
+

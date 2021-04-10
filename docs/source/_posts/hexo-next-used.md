@@ -1,5 +1,5 @@
 ---
-title: HEO next 主题使用
+title: Hexo next 主题使用
 description: 这是显示在首页的概述，正文内容均会被隐藏。
 ---
 

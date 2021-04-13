@@ -183,7 +183,16 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-04-13 16:57:49 / 修改时间：17:10:33" itemprop="dateCreated datePublished" datetime="2021-04-13T16:57:49+08:00">2021-04-13</time>
+              <time title="创建时间：2021-04-13 16:57:49 / 修改时间：17:14:48" itemprop="dateCreated datePublished" datetime="2021-04-13T16:57:49+08:00">2021-04-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                </span>
             </span>
 
           
@@ -197,70 +206,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <span id="more"></span>
-
-
-
-<h2 id="java-Spring-boot-微服务"><a href="#java-Spring-boot-微服务" class="headerlink" title="java Spring-boot + 微服务"></a>java Spring-boot + 微服务</h2><p>这里是我学习spring-boot的一个快速流程和文档记录，可以依据这个快速了解一下这个spring微服务的生态</p>
+          <h2 id="java-Spring-boot-微服务"><a href="#java-Spring-boot-微服务" class="headerlink" title="java Spring-boot + 微服务"></a>java Spring-boot + 微服务</h2><p>这里是我学习spring-boot的一个快速流程和文档记录，可以依据这个快速了解一下这个spring微服务的生态</p>
 <p>java版本1.8，工具ideaintellj， mysql，Redis，maven3，git bash</p>
 <p>组件：nacos，mybatis，com.alibaba.cloud等</p>
-<h3 id="跑起来-demo-com-zhiteer-demo"><a href="#跑起来-demo-com-zhiteer-demo" class="headerlink" title="跑起来 demo com.zhiteer.demo"></a>跑起来 demo com.zhiteer.demo</h3><ol>
-<li><p>下载ideaintellj</p>
-</li>
-<li><p>下载java8和配置好maven</p>
-</li>
-<li><p>下载工程demo</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;elinxer&#x2F;spring-cloud-demo.git</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>打开ideaintellj，点击open导入文件夹</li>
-</ol>
-<p>如果弹出是否要信任项目，直接信任</p>
-<ol start="5">
-<li>下载 nacos</li>
-</ol>
-<p>网址 ：<a target="_blank" rel="noopener" href="https://github.com/alibaba/nacos/releases">https://github.com/alibaba/nacos/releases</a></p>
-<p>压缩一个压缩包：nacos-server-2.0.0.zip</p>
-<p>解压在磁盘上一个位置，然后进入bin：D:\develop\nacos-server-2.0.0\nacos\bin</p>
-<p>单机启动nacos，因为是本地，不支持多机启动<br>./startup.cmd -m standalone</p>
-<ol start="6">
-<li>配置MySQL，配置Redis</li>
-</ol>
-<p>mysql 数据库 test</p>
-<p>测试用户表：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `<span class="keyword">user</span>` (</span><br><span class="line">  `id` <span class="type">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `name` <span class="type">varchar</span>(<span class="number">100</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `age` <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`id`)</span><br><span class="line">) ENGINE<span class="operator">=</span>InnoDB <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>utf8mb4;</span><br></pre></td></tr></table></figure>
-
-<h2 id="spring-boot-学习"><a href="#spring-boot-学习" class="headerlink" title="spring boot 学习"></a>spring boot 学习</h2><ol>
-<li>注意 spring boot 请求带上请求头json以及提交参数默认项 {} 采用raw方式</li>
-</ol>
-<p>比如 代码里面使用了 @RequestBody 则必须不能为空，且要raw-json内容作为参数请求</p>
-<h2 id="mybatis-学习"><a href="#mybatis-学习" class="headerlink" title="mybatis 学习"></a>mybatis 学习</h2><p>1.spring boot mybatis </p>
-<p>在配置xml的时候并不是自动匹配resource下面的xml的，你必须在项目配置里面指定一个目录：<br>并且还要指定一个model包地址<br>src/main/resources/application.properties<br>########################## mybatis begin ##########################<br>mybatis.mapper-locations=classpath*:mybatis/*.xml<br>mybatis.type-aliases-package=com.zhiteer.demo.**.model<br>########################## mybatis end ##########################</p>
-<p>配置好后，xml文件的名称要与mapper映射的文件名保持一致，并且标识注解@Mapper，这样才能匹配上</p>
-<p>注意mybatis的xml编写以及用处，尤其是resultType和resultMap区分</p>
-<p>使用mybatis是可以同时使用注解和xml方式的</p>
-<p>spring boot接口输出返回JSON格式要对象和Map格式，同时如要定义固定的返回结构，需要载入一个固定结构的对象</p>
-<p>mybatis 底层是基于jdbc驱动的<br><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/383388104">https://www.zhihu.com/question/383388104</a></p>
-<p>mybatis 学习文档：<br><a target="_blank" rel="noopener" href="http://c.biancheng.net/view/4313.html">http://c.biancheng.net/view/4313.html</a><br>是如何防注入：</p>
-<h3 id="mybatis-生命周期"><a href="#mybatis-生命周期" class="headerlink" title="mybatis 生命周期"></a>mybatis 生命周期</h3><p>生命周期是组件的重要问题，尤其是在多线程的环境中，比如互联网应用、Socket 请求等，而 MyBatis 也常用于多线程的环境中，错误使用会造成严重的多线程并发问题，为了正确编写 MyBatis 的应用程序，我们需要掌握 MyBatis 组件的生命周期。</p>
-<p>所谓生命周期就是每一个对象应该存活的时间，比如一些对象一次用完后就要关闭，使它们被 Java 虚拟机（JVM）销毁，以避免继续占用资源，所以我们会根据每一个组件的作用去确定其生命周期。</p>
-<p>SqlSessionFactoryBuilder<br>SqlSessionFactoryBuilder 的作用在于创建 SqlSessionFactory，创建成功后，SqlSessionFactoryBuilder 就失去了作用，所以它只能存在于创建 SqlSessionFactory 的方法中，而不要让其长期存在。因此 SqlSessionFactoryBuilder 实例的最佳作用域是方法作用域（也就是局部方法变量）。<br>SqlSessionFactory<br>SqlSessionFactory 可以被认为是一个数据库连接池，它的作用是创建 SqlSession 接口对象。因为 MyBatis 的本质就是 Java 对数据库的操作，所以 SqlSessionFactory 的生命周期存在于整个 MyBatis 的应用之中，所以一旦创建了 SqlSessionFactory，就要长期保存它，直至不再使用 MyBatis 应用，所以可以认为 SqlSessionFactory 的生命周期就等同于 MyBatis 的应用周期。</p>
-<p>由于 SqlSessionFactory 是一个对数据库的连接池，所以它占据着数据库的连接资源。如果创建多个 SqlSessionFactory，那么就存在多个数据库连接池，这样不利于对数据库资源的控制，也会导致数据库连接资源被消耗光，出现系统宕机等情况，所以尽量避免发生这样的情况。</p>
-<p>因此在一般的应用中我们往往希望 SqlSessionFactory 作为一个单例，让它在应用中被共享。所以说 SqlSessionFactory 的最佳作用域是应用作用域。</p>
-<p>SqlSession<br>如果说 SqlSessionFactory 相当于数据库连接池，那么 SqlSession 就相当于一个数据库连接（Connection 对象），你可以在一个事务里面执行多条 SQL，然后通过它的 commit、rollback 等方法，提交或者回滚事务。</p>
-<p>所以它应该存活在一个业务请求中，处理完整个请求后，应该关闭这条连接，让它归还给 SqlSessionFactory，否则数据库资源就很快被耗费精光，系统就会瘫痪，所以用 try…catch…finally… 语句来保证其正确关闭。</p>
-<p>所以 SqlSession 的最佳的作用域是请求或方法作用域。</p>
-<p>Mapper<br>Mapper 是一个接口，它由 SqlSession 所创建，所以它的最大生命周期至多和 SqlSession 保持一致，尽管它很好用，但是由于 SqlSession 的关闭，它的数据库连接资源也会消失，所以它的生命周期应该小于等于 SqlSession 的生命周期。Mapper 代表的是一个请求中的业务处理，所以它应该在一个请求中，一旦处理完了相关的业务，就应该废弃它。</p>
-<p>以上，我们讨论了 MyBatis 组件的生命周期。 </p>
-<p>异常错误分析<br>java.lang.IllegalArgumentException: Result Maps collection does not contain value for com.xx.xx.map<br>这种错误直接将对应xml的resultMap改为resultType</p>
-<p>resultMap和resultType区别</p>
-<p>通常，定义一个resultMap的字段自定义映射才需要使用resultMap类型去匹配实体类，所以正常是要一个resultMap标签</p>
-<p>resultType返回得系统类型，如果是实体类，那么默认约束的字段就是和实体类保持一致，字段格式采用驼峰形式定义下划线</p>
-<h3 id="mybatis-缓存机制"><a href="#mybatis-缓存机制" class="headerlink" title="mybatis 缓存机制"></a>mybatis 缓存机制</h3><p><a target="_blank" rel="noopener" href="https://tech.meituan.com/2018/01/19/mybatis-cache.html">https://tech.meituan.com/2018/01/19/mybatis-cache.html</a></p>
-<p>mybatis缓存机制有一级缓存和二级缓存，当指定缓存后，查询会生成一级缓存，如果进行了数据的修改一级缓存会消失<br>个SqlSession中持有了Executor，每个Executor中有一个LocalCache。当用户发起查询时，MyBatis根据当前执行的语句生成MappedStatement，在Local Cache进行查询，如果缓存命中的话，直接返回结果给用户，如果缓存没有命中的话，查询数据库，结果写入Local Cache，最后返回结果给用户。具体实现类的类关系图如下图所示。  </p>
-<h3 id="mybatis-事务"><a href="#mybatis-事务" class="headerlink" title="mybatis 事务"></a>mybatis 事务</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/04/13/spring-boot-demo/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -503,13 +459,13 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

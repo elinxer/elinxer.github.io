@@ -1,13 +1,13 @@
 ---
-title: spring-boot-demo
+title: spring-boot入门--基础使用
 date: 2021-04-13 16:57:49
-tags: java
+categories: Java
+tags: 
+    - java
+    - spring-boot
+    - mybatis
 
 ---
-
-<!-- more -->
-
-
 
 ## java Spring-boot + 微服务
 
@@ -18,6 +18,7 @@ java版本1.8，工具ideaintellj， mysql，Redis，maven3，git bash
 
 组件：nacos，mybatis，com.alibaba.cloud等
 
+<!-- more -->
 
 ### 跑起来 demo com.zhiteer.demo
 

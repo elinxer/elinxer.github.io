@@ -1,5 +1,5 @@
 ---
-title: spring-boot入门--基础使用
+title: spring-boot入门--
 date: 2021-04-13 16:57:49
 categories: Java
 tags: 
@@ -9,8 +9,9 @@ tags:
 
 ---
 
-## java Spring-boot + 微服务
+## 前言
 
+java Spring-boot + 微服务
 
 这里是我学习spring-boot的一个快速流程和文档记录，可以依据这个快速了解一下这个spring微服务的生态
 
@@ -64,13 +65,43 @@ CREATE TABLE `user` (
   `age` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE idcard (
+    id tinyint(2) NOT NULL AUTO_INCREMENT,
+    code varchar(20)  DEFAULT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE person (
+    id tinyint(2) NOT NULL,
+    name varchar(20)  DEFAULT NULL,
+    age int(11) DEFAULT NULL,
+    idcard_id tinyint(2) DEFAULT NULL,
+    PRIMARY KEY (id),
+    KEY idcard_id (idcard_id),
+    CONSTRAINT idcard_id FOREIGN KEY (idcard_id) REFERENCES idcard(id)
+);
+
+CREATE TABLE `orders` (
+    `id` tinyint(2) NOT NULL AUTO_INCREMENT,
+    `ordersn` varchar(10) DEFAULT NULL,
+    `user_id` tinyint(2) DEFAULT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 ```
+
+
 
 ## spring boot 学习
 
 1. 注意 spring boot 请求带上请求头json以及提交参数默认项 {} 采用raw方式
 
 比如 代码里面使用了 @RequestBody 则必须不能为空，且要raw-json内容作为参数请求
+
+
+2.注意，Java实体里面的类属性一般设置的是私有属性，所以如果没有get是无法获取的，解析的时候就不存在这字段。
+
 
 ## mybatis 学习
 
@@ -157,4 +188,10 @@ mybatis缓存机制有一级缓存和二级缓存，当指定缓存后，查询�
 
 
 ### mybatis 事务
+
+
+
+### mybatis 关联关系
+
+
 
